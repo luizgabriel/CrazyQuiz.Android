@@ -6,10 +6,8 @@ import kotlinx.coroutines.experimental.runBlocking
 
 class QuestionarySession(val questions: QuestionsService) {
 
+    private val skippedQuestions = ArrayList<Question>()
     private val answeredQuestions = ArrayList<Question>()
-    private lateinit var currentQuestion: Question
-    private var life = 5
-    private var skipLimit = 3
     private val questionToBonusSkip = 5
     private val lifesPerQuestion = 1
     private val scoresPerQuestion = 30
@@ -17,9 +15,19 @@ class QuestionarySession(val questions: QuestionsService) {
     private val scoresPerHint = scoresPerError / 2
     private val scoresPerSkip = scoresPerError
 
+    val player = Player()
+    val questionNumber: Int get() = answeredQuestions.size + skippedQuestions.size + 1
     val level: Int get() = if (answeredQuestions.size == 0) 1 else answeredQuestions.last().level
 
-    val player = Player()
+
+    lateinit var currentQuestion: Question
+        private set
+
+    var skipLimit = 3
+        private set
+
+    private var life = 5
+        private set
 
     init {
         nextQuestion()
@@ -46,13 +54,15 @@ class QuestionarySession(val questions: QuestionsService) {
         }
     }
 
-    fun askForHint() {
+    fun askForHint(): String {
         player.scores -= scoresPerHint
+        return currentQuestion.hint
     }
 
     fun skipQuestion() {
         player.scores -= scoresPerSkip
         skipLimit -= 1
+        skippedQuestions.add(currentQuestion)
         nextQuestion()
     }
 

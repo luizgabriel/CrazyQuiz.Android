@@ -6,6 +6,6 @@ import br.edu.ifce.crazyquiz.presenters.BasePresenter
 interface IQuestionView: BasePresenter.IView {
     fun setQuestionText(text: String)
     fun setQuestionNumber(number: Int)
-    fun showHint(text: String)
-    fun setQuestionOptions(options: Array<QuestionOption>)
+    fun setQuestionOptions(options: List<QuestionOption>)
+    fun showHint(hint: String)
 }

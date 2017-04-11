@@ -10,7 +10,7 @@ import org.jetbrains.anko.*
 
 class MainActivity : AppCompatActivity(), IMainView {
 
-    val presenter: MainPresenter = MainPresenter(this)
+    lateinit var presenter: MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity(), IMainView {
         val startBtn = findViewById(R.id.start_btn) as FloatingActionButton
         val scoresBtn = findViewById(R.id.scores_btn) as FloatingActionButton
         val shareBtn = findViewById(R.id.share_btn) as FloatingActionButton
+        presenter = MainPresenter(this)
 
         startBtn.onClick { presenter.onClickStartGame() }
         scoresBtn.onClick { presenter.onClickHighScores() }
