@@ -4,7 +4,7 @@ import br.edu.ifce.crazyquiz.services.QuestionsService
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.runBlocking
 
-class QuestionarySession(val questions: QuestionsService) {
+class QuestionnaireSession(val questions: QuestionsService) {
 
     private val skippedQuestions = ArrayList<Question>()
     private val answeredQuestions = ArrayList<Question>()

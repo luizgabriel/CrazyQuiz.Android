@@ -12,7 +12,7 @@ import java.util.concurrent.FutureTask
 
 class CrazyQuizRestClient(val client: OkHttpClient, val gson: Gson) : IRestClient {
 
-    val baseUrl = "http://crazy-quiz.herokuapp.com/api"
+    val baseUrl = "http://crazyquiz.herokuapp.com/api"
 
     override suspend fun <T> get(uri: String): ApiResponse<T> {
         val request = Request.Builder()
@@ -20,7 +20,7 @@ class CrazyQuizRestClient(val client: OkHttpClient, val gson: Gson) : IRestClien
                 .get()
                 .build()
 
-        return parseReponse<T>(client.newCall(request).execute())
+        return parseReponse(client.newCall(request).execute())
     }
 
     override suspend fun <T> post(url: String, body: RequestBody): ApiResponse<T> {
