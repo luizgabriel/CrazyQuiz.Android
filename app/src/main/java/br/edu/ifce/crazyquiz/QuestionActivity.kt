@@ -59,9 +59,17 @@ class QuestionActivity : AppCompatActivity(), IQuestionView {
         questionNumber.text = number.toString()
     }
 
+    override fun setQuestionLevel(level: Int) {
+        //
+    }
+
     override fun setQuestionOptions(options: List<QuestionOption>) {
         val opts = options.map { it.text }
         questionOptionsList.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_single_choice, opts)
+    }
+
+    override fun notifyWrongAnswer() {
+        toast(R.string.less_one_life)
     }
 
 }

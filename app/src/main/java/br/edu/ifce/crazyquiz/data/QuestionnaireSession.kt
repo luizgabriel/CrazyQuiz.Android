@@ -9,11 +9,11 @@ class QuestionnaireSession(val questions: QuestionsService) {
     private val skippedQuestions = ArrayList<Question>()
     private val answeredQuestions = ArrayList<Question>()
     private val questionToBonusSkip = 5
-    private val lifesPerQuestion = 1
-    private val scoresPerQuestion = 30
-    private val scoresPerError = scoresPerQuestion / 2
-    private val scoresPerHint = scoresPerError / 2
-    private val scoresPerSkip = scoresPerError
+    val lifesPerQuestion = 1
+    val scoresPerQuestion = 30
+    val scoresPerError = scoresPerQuestion / 2
+    val scoresPerHint = scoresPerError / 2
+    val scoresPerSkip = scoresPerError
 
     val player = Player()
     val questionNumber: Int get() = answeredQuestions.size + skippedQuestions.size + 1
@@ -39,8 +39,8 @@ class QuestionnaireSession(val questions: QuestionsService) {
         }
     }
 
-    fun answer(selectedOption: QuestionOption) {
-        if (currentQuestion.rightOptionId == selectedOption.id) {
+    fun answer(selectedOption: QuestionOption): Boolean {
+        if (selectedOption.answer) {
             player.scores += scoresPerQuestion
             answeredQuestions.add(currentQuestion)
             nextQuestion()
@@ -48,9 +48,12 @@ class QuestionnaireSession(val questions: QuestionsService) {
             if (answeredQuestions.size > 0 && answeredQuestions.size % questionToBonusSkip == 0)
                 skipLimit += 1
 
+            return true
         } else {
             player.scores -= scoresPerError
             life -= lifesPerQuestion
+
+            return false
         }
     }
 

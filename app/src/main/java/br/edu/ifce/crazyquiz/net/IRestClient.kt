@@ -1,8 +1,9 @@
-package br.edu.ifce.crazyquiz.services
+package br.edu.ifce.crazyquiz.net
 
 import br.edu.ifce.crazyquiz.net.ApiResponse
+import okhttp3.Request
 import okhttp3.RequestBody
-import java.util.concurrent.Future
+import okhttp3.Response
 
 interface IRestClient {
     suspend fun <T> get(uri: String): ApiResponse<T>

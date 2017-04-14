@@ -7,5 +7,7 @@ interface IQuestionView: BasePresenter.IView {
     fun setQuestionText(text: String)
     fun setQuestionNumber(number: Int)
     fun setQuestionOptions(options: List<QuestionOption>)
+    fun setQuestionLevel(level: Int)
     fun showHint(hint: String)
+    fun notifyWrongAnswer()
 }
