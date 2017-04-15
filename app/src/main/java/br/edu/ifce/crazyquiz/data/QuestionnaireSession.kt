@@ -9,7 +9,7 @@ class QuestionnaireSession(val questions: QuestionsService) {
     private val skippedQuestions = ArrayList<Question>()
     private val answeredQuestions = ArrayList<Question>()
     private val questionToBonusSkip = 5
-    val lifesPerQuestion = 1
+    val livesPerQuestion = 1
     val scoresPerQuestion = 30
     val scoresPerError = scoresPerQuestion / 2
     val scoresPerHint = scoresPerError / 2
@@ -26,17 +26,22 @@ class QuestionnaireSession(val questions: QuestionsService) {
     var skipLimit = 3
         private set
 
-    private var life = 5
-        private set
+    var life = 5
+        private set(value) {
+            field = if (value > 0) value else 0
+            if (field == 0) throw GameOverException(this)
+        }
 
     init {
         nextQuestion()
     }
 
-    private fun nextQuestion() {
-        runBlocking (CommonPool) {
-            currentQuestion = questions.getRandomQuestion(answeredQuestions, level)
-        }
+    private fun nextQuestion() = runBlocking(CommonPool) {
+        val q = questions.getRandomQuestion(answeredQuestions, level)
+        if (q == null)
+            throw FinishedGameException(this@QuestionnaireSession)
+        else
+            currentQuestion = q
     }
 
     fun answer(selectedOption: QuestionOption): Boolean {
@@ -51,15 +56,14 @@ class QuestionnaireSession(val questions: QuestionsService) {
             return true
         } else {
             player.scores -= scoresPerError
-            life -= lifesPerQuestion
+            life -= livesPerQuestion
 
             return false
         }
     }
 
-    fun askForHint(): String {
+    fun askForHint() {
         player.scores -= scoresPerHint
-        return currentQuestion.hint
     }
 
     fun skipQuestion() {
@@ -69,4 +73,9 @@ class QuestionnaireSession(val questions: QuestionsService) {
         nextQuestion()
     }
 
+    class GameOverException(val session: QuestionnaireSession) : Exception()
+    class FinishedGameException(val session: QuestionnaireSession) : Exception()
+
 }
+
+

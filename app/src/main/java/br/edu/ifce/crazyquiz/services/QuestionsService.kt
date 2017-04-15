@@ -7,9 +7,9 @@ import com.google.gson.Gson
 
 class QuestionsService(val client: IRestClient) {
 
-    suspend fun getRandomQuestion(answeredQuestions: List<Question>, level: Int): Question {
+    suspend fun getRandomQuestion(answeredQuestions: List<Question>, level: Int): Question? {
         val answered = answeredQuestions.map { it.id }
-        val response = client.get<Question>("/questions/random?answered={0}&level={1}".format(answered.joinToString(","), level))
+        val response = client.get<Question?>("/questions/random?answered=%s&level=%d".format(answered.joinToString(","), level))
 
         return response.data
     }
