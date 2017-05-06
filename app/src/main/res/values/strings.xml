@@ -17,5 +17,8 @@
     <string name="footer_message">Consegue responder todas?</string>
     <string name="level">Nível</string>
     <string name="test_number">0</string>
-    <string name="loading_question">Carregando...</string>
+    <string name="loading_question">Carregando&#8230;</string>
+    <string name="first_loading">Carregando questões&#8230;</string>
+    <string name="service_unavailable">Servidor indisponível - verifique sua conexão com a internet</string>
+
 </resources>

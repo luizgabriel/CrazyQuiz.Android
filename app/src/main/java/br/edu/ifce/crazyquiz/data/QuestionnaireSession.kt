@@ -1,8 +1,6 @@
 package br.edu.ifce.crazyquiz.data
 
 import br.edu.ifce.crazyquiz.services.QuestionsService
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.runBlocking
 
 class QuestionnaireSession(val questions: QuestionsService) {
 
@@ -18,7 +16,6 @@ class QuestionnaireSession(val questions: QuestionsService) {
     val player = Player()
     val questionNumber: Int get() = answeredQuestions.size + skippedQuestions.size + 1
     val level: Int get() = if (answeredQuestions.size == 0) 1 else answeredQuestions.last().level
-
 
     lateinit var currentQuestion: Question
         private set
@@ -36,7 +33,7 @@ class QuestionnaireSession(val questions: QuestionsService) {
         nextQuestion()
     }
 
-    private fun nextQuestion() = runBlocking(CommonPool) {
+    private fun nextQuestion() {
         val q = questions.getRandomQuestion(answeredQuestions, level)
         if (q == null)
             throw FinishedGameException(this@QuestionnaireSession)
