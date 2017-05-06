@@ -16,9 +16,6 @@ import android.widget.TextView
 import br.edu.ifce.crazyquiz.data.QuestionOption
 import br.edu.ifce.crazyquiz.presenters.QuestionPresenter
 import br.edu.ifce.crazyquiz.views.IQuestionView
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.launch
-
 import org.jetbrains.anko.*
 
 class QuestionActivity : AppCompatActivity(), IQuestionView {
