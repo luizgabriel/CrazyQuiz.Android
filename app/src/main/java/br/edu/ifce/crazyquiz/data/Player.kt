@@ -7,4 +7,8 @@ class Player(var name: String = "", scores: Int = 0) {
             field = if (value > 0) value else 0
         }
 
+    override fun hashCode(): Int {
+        return name.hashCode()
+    }
+
 }

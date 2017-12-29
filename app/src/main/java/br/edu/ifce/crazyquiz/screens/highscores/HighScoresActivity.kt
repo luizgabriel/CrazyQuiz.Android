@@ -7,25 +7,22 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import br.edu.ifce.crazyquiz.R
 import br.edu.ifce.crazyquiz.data.Player
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.activity_high_scores.*
+import kotlinx.android.synthetic.main.high_scores_list_item.*
 
 class HighScoresActivity : AppCompatActivity(), IHighScoresView {
 
-    private val presenter = HighScoresPresenter(this)
-
-    private lateinit var highScoresList: RecyclerView
+    private val presenter = HighScoresPresenter(this, PlayerStore(applicationContext))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_high_scores)
 
-        highScoresList = findViewById(R.id.high_scores_list) as RecyclerView
         highScoresList.setHasFixedSize(true)
-
-        val highScoresLayoutManager = LinearLayoutManager(this)
-        highScoresList.layoutManager = highScoresLayoutManager
+        highScoresList.layoutManager = LinearLayoutManager(this)
 
         presenter.onCreateView()
     }
@@ -35,41 +32,26 @@ class HighScoresActivity : AppCompatActivity(), IHighScoresView {
         highScoresList.adapter = adapter
     }
 
-    class HighScoresListAdapter(val players: List<Player>) : RecyclerView.Adapter<HighScoresListAdapter.ViewHolder>() {
+    class HighScoresListAdapter(private val players: List<Player>) : RecyclerView.Adapter<HighScoresListAdapter.ViewHolder>() {
 
-        val TYPE_MAJOR = 0
-        val TYPE_MINOR = 1
-
-        class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
-            val name = view.findViewById(R.id.high_scores_name) as TextView
-            val value = view.findViewById(R.id.high_scores_value) as TextView
-            val place = view.findViewById(R.id.high_scores_place) as TextView
+        class ViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+            fun bind(player: Player) {
+                highScoresName.text = player.name
+                highScoresValue.text = player.scores.toString()
+                highScoresPlace.text = """${adapterPosition + 1}º"""
+            }
         }
 
         override fun getItemCount() = players.count()
 
         override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
             val player = players[position]
-            holder?.name?.text = player.name
-            holder?.value?.text = player.scores.toString()
-            holder?.place?.text = """${position + 1}º"""
-        }
-
-        override fun getItemViewType(position: Int) = if (position < 3) TYPE_MAJOR else TYPE_MINOR
-
-        private fun getListItemResource(viewType: Int): Int {
-            when (viewType) {
-                TYPE_MAJOR -> return R.layout.high_scores_list_item
-                TYPE_MINOR -> return R.layout.high_scores_list_secondary_item
-            }
-
-            throw NotImplementedError()
+            holder?.bind(player)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-            val view = LayoutInflater.from(parent!!.context).inflate(getListItemResource(viewType), parent, false)
-            val viewHolder = ViewHolder(view)
-            return viewHolder
+            val view = LayoutInflater.from(parent!!.context).inflate(R.layout.high_scores_list_item, parent, false)
+            return ViewHolder(view)
         }
     }
 

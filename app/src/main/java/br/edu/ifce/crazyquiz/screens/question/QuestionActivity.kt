@@ -9,6 +9,7 @@ import android.os.Vibrator
 import android.support.v7.app.AppCompatActivity
 import android.widget.ArrayAdapter
 import br.edu.ifce.crazyquiz.R
+import br.edu.ifce.crazyquiz.data.Player
 import br.edu.ifce.crazyquiz.data.QuestionOption
 import kotlinx.android.synthetic.main.activity_question.*
 import org.jetbrains.anko.sdk25.coroutines.onItemClick
@@ -41,13 +42,17 @@ class QuestionActivity : AppCompatActivity(), IQuestionView {
         presenter.onBackButtonPressed()
     }
 
-    override fun callFinishedGameScreen() {
+    override fun callFinishedGameScreen(player: Player) {
         toast(getString(R.string.game_complete))
+        toast(getString(R.string.scores) + " " + player.scores)
         finish()
     }
 
-    override fun callGameOverScreen() {
+    override fun callGameOverScreen(player: Player) {
         toast(getString(R.string.game_over))
+        toast(getString(R.string.scores) + " " + player.scores)
+        player.name = "TestPlayer"
+
         finish()
     }
 

@@ -9,5 +9,6 @@ import kotlinx.android.parcel.Parcelize
 data class Question(
         val id: Int,
         val text: String,
+        val difficulty: Int,
         val options: ArrayList<QuestionOption>) : Parcelable
 

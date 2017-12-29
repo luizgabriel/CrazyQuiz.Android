@@ -7,22 +7,23 @@ import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 
-class MainPresenter(view: IMainView, store: IQuestionStore) : BasePresenter<IMainView>(view) {
+class MainPresenter(view: IMainView, private val store: IQuestionStore) : BasePresenter<IMainView>(view) {
 
-    private val questions = QuestionsService(store)
+    private val service = QuestionsService()
 
     override fun onCreateView() {
         view.startLoading()
         launch(CommonPool) {
-            val result = questions.load()
+            val result = service.getQuestions(store.getLastRefreshDate())
+            store.addAll(result)
 
             launch(UI) {
                 view.finishLoading()
-                if (!result) view.errorOnLoadQuestions()
+                if (store.isEmpty())
+                    view.errorOnLoadQuestions()
             }
         }
     }
-
 
     fun onClickStartGame() {
         view.startGameScreen()

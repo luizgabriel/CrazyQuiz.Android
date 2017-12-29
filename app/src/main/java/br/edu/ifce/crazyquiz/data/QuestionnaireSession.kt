@@ -1,8 +1,7 @@
 package br.edu.ifce.crazyquiz.data
+import br.edu.ifce.crazyquiz.screens.question.IQuestionStore
 
-import br.edu.ifce.crazyquiz.services.QuestionsService
-
-class QuestionnaireSession(private val questions: QuestionsService) {
+class QuestionnaireSession(private val questions: IQuestionStore) {
 
     private val skippedQuestions = ArrayList<Question>()
     private val answeredQuestions = ArrayList<Question>()
@@ -22,17 +21,13 @@ class QuestionnaireSession(private val questions: QuestionsService) {
     var life = 5
         private set(value) {
             field = if (value > 0) value else 0
-            if (field == 0) throw GameOverException(this)
+            if (field == 0) throw GameOverException()
         }
 
-    init {
-        nextQuestion()
-    }
-
-    private fun nextQuestion() {
+    fun nextQuestion() {
         val q = questions.getRandomQuestion(answeredQuestions)
         if (q == null)
-            throw FinishedGameException(this)
+            throw FinishedGameException()
         else
             currentQuestion = q
     }
@@ -41,7 +36,6 @@ class QuestionnaireSession(private val questions: QuestionsService) {
         return if (selectedOption.answer) {
             player.scores += scoresPerQuestion
             answeredQuestions.add(currentQuestion)
-            nextQuestion()
 
             if (answeredQuestions.size > 0 && (answeredQuestions.size % questionToBonusSkip) == 0)
                 skipLimit += 1
@@ -62,8 +56,8 @@ class QuestionnaireSession(private val questions: QuestionsService) {
         nextQuestion()
     }
 
-    class GameOverException(val session: QuestionnaireSession) : Exception()
-    class FinishedGameException(val session: QuestionnaireSession) : Exception()
+    class GameOverException : Exception()
+    class FinishedGameException : Exception()
 
 }
 
