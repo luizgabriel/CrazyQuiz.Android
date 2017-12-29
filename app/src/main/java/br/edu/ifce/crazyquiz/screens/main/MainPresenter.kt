@@ -1,24 +1,28 @@
-package br.edu.ifce.crazyquiz.presenters
+package br.edu.ifce.crazyquiz.screens.main
 
-import br.edu.ifce.crazyquiz.CrazyQuiz.questionsService
-import br.edu.ifce.crazyquiz.views.IMainView
+import br.edu.ifce.crazyquiz.screens.question.IQuestionStore
+import br.edu.ifce.crazyquiz.services.QuestionsService
+import br.edu.ifce.crazyquiz.util.BasePresenter
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 
-class MainPresenter(view: IMainView) : BasePresenter<IMainView>(view) {
+class MainPresenter(view: IMainView, store: IQuestionStore) : BasePresenter<IMainView>(view) {
 
-    init {
+    private val questions = QuestionsService(store)
+
+    override fun onCreateView() {
         view.startLoading()
         launch(CommonPool) {
-            val res = questionsService.retrieveQuestions()
+            val result = questions.load()
 
             launch(UI) {
                 view.finishLoading()
-                if (!res) view.errorOnLoadQuestions()
+                if (!result) view.errorOnLoadQuestions()
             }
         }
     }
+
 
     fun onClickStartGame() {
         view.startGameScreen()

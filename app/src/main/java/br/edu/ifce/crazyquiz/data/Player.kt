@@ -1,9 +1,8 @@
 package br.edu.ifce.crazyquiz.data
 
-class Player(name: String = "", scores: Int = 0) {
+class Player(var name: String = "", scores: Int = 0) {
 
-    var name = name
-    var scores = scores
+    var scores: Int = scores
         set(value) {
             field = if (value > 0) value else 0
         }

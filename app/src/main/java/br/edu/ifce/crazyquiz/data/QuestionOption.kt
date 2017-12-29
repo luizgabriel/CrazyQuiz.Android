@@ -1,3 +1,9 @@
 package br.edu.ifce.crazyquiz.data
 
-data class QuestionOption(val text: String, val answer: Boolean)
+import android.annotation.SuppressLint
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@SuppressLint("ParcelCreator")
+@Parcelize
+data class QuestionOption(val text: String, val answer: Boolean) : Parcelable

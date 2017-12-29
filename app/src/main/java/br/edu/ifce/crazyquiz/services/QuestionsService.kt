@@ -1,46 +1,50 @@
 package br.edu.ifce.crazyquiz.services
 
+import br.edu.ifce.crazyquiz.data.ApiResponse
 import br.edu.ifce.crazyquiz.data.Question
-import br.edu.ifce.crazyquiz.net.ApiResponse
-import br.edu.ifce.crazyquiz.net.IRestClient
-import com.google.gson.reflect.TypeToken
-import java.net.ConnectException
+import br.edu.ifce.crazyquiz.screens.question.IQuestionStore
+import retrofit2.Call
+import retrofit2.http.GET
+import retrofit2.http.Query
 import java.util.*
 import kotlin.collections.ArrayList
 
-class QuestionsService(val client: IRestClient) {
 
-    val questions = LinkedList<Question>()
+class QuestionsService(private val store: IQuestionStore) {
 
-    private suspend fun loadQuestions(level: Int = 1) {
-        val responseType = object: TypeToken<ApiResponse<ArrayList<Question>>>() {}
-        val response = client.get("questions?level=%d".format(level), responseType)
-        for (q: Question in response.data)
-            questions.addLast(q);
+    private val client = api(QuestionsApi::class.java)
 
-        if (response.size > 0)
-            loadQuestions(level+1)
+    private suspend fun getQuestions(lastRefresh: Date?): ArrayList<Question> {
+        val response = client.getQuestions(lastRefresh).execute()
+        return if (response.isSuccessful)
+            response.body()?.data!!
+        else
+            ArrayList()
     }
 
-    fun getRandomQuestion(answeredQuestions: List<Question>, level: Int): Question? {
-        val answered = answeredQuestions.map { it.id }
-        val levelQuestions = questions.filter {it.level == level && it.id !in answered }
+    suspend fun load(): Boolean {
+        val serverQuestions = getQuestions(store.getLastRefreshDate())
 
-        if (levelQuestions.isEmpty())
-            return null
+        store.addAll(serverQuestions)
+        return store.isNotEmpty()
+    }
+
+
+    fun getRandomQuestion(answeredQuestions: List<Question>): Question? {
+        val answered = answeredQuestions.map { it.id }
+        val levelQuestions = store.filter { it.id !in answered }
+
+        return if (levelQuestions.isEmpty())
+            null
         else {
             val randomQuestionIdx: Int = (System.currentTimeMillis() % levelQuestions.size).toInt()
-            return levelQuestions[randomQuestionIdx]
+            levelQuestions[randomQuestionIdx]
         }
     }
 
-    suspend fun retrieveQuestions(): Boolean {
-        try {
-            loadQuestions()
-            return questions.size > 0
-        } catch (e: ConnectException) {
-            return false
-        }
+    interface QuestionsApi {
+        @GET("questions")
+        fun getQuestions(@Query("last_refresh") lastRefresh: Date?): Call<ApiResponse<ArrayList<Question>>>
     }
 
 }

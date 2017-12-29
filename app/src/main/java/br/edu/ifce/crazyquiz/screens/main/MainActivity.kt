@@ -1,37 +1,34 @@
-package br.edu.ifce.crazyquiz
+package br.edu.ifce.crazyquiz.screens.main
 
-import android.app.ProgressDialog
+import android.app.Dialog
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
-import br.edu.ifce.crazyquiz.presenters.MainPresenter
-import br.edu.ifce.crazyquiz.views.IMainView
-import org.jetbrains.anko.onClick
-import org.jetbrains.anko.*
+import br.edu.ifce.crazyquiz.R
+import br.edu.ifce.crazyquiz.screens.highscores.HighScoresActivity
+import br.edu.ifce.crazyquiz.screens.question.QuestionActivity
+import br.edu.ifce.crazyquiz.screens.question.QuestionStore
+import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.indeterminateProgressDialog
+import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity(), IMainView {
 
-    lateinit var presenter: MainPresenter
-    private lateinit var startBtn: FloatingActionButton
-    private lateinit var scoresBtn: FloatingActionButton
-    private lateinit var shareBtn: FloatingActionButton
-    private lateinit var processDialog: ProgressDialog
-
+    private val presenter = MainPresenter(this, QuestionStore(applicationContext))
+    private lateinit var processDialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        startBtn = findViewById(R.id.start_btn) as FloatingActionButton
-        scoresBtn = findViewById(R.id.scores_btn) as FloatingActionButton
-        shareBtn = findViewById(R.id.share_btn) as FloatingActionButton
         processDialog = indeterminateProgressDialog(R.string.first_loading)
-        presenter = MainPresenter(this)
 
         startBtn.onClick { presenter.onClickStartGame() }
         scoresBtn.onClick { presenter.onClickHighScores() }
         shareBtn.onClick { presenter.onClickShare() }
 
+        presenter.onCreateView()
     }
 
     override fun startGameScreen() {
@@ -39,7 +36,7 @@ class MainActivity : AppCompatActivity(), IMainView {
     }
 
     override fun openHighScoresScreen() {
-        //
+        startActivity<HighScoresActivity>()
     }
 
     override fun openShareScreen() {
@@ -48,6 +45,7 @@ class MainActivity : AppCompatActivity(), IMainView {
 
     override fun errorOnLoadQuestions() {
         toast(R.string.service_unavailable)
+        processDialog.dismiss()
         finish()
     }
 

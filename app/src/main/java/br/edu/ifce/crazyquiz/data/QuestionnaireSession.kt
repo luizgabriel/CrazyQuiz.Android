@@ -2,25 +2,21 @@ package br.edu.ifce.crazyquiz.data
 
 import br.edu.ifce.crazyquiz.services.QuestionsService
 
-class QuestionnaireSession(val questions: QuestionsService) {
+class QuestionnaireSession(private val questions: QuestionsService) {
 
     private val skippedQuestions = ArrayList<Question>()
     private val answeredQuestions = ArrayList<Question>()
     private val questionToBonusSkip = 5
-    val livesPerQuestion = 1
-    val scoresPerQuestion = 30
-    val scoresPerError = scoresPerQuestion / 2
-    val scoresPerHint = scoresPerError / 2
-    val scoresPerSkip = scoresPerError
+    private val livesPerQuestion = 1
+    private val scoresPerQuestion = 30
+    private val scoresPerError = scoresPerQuestion / 2
+    private val scoresPerSkip = scoresPerError
+    private var skipLimit = 3
 
     val player = Player()
     val questionNumber: Int get() = answeredQuestions.size + skippedQuestions.size + 1
-    val level: Int get() = if (answeredQuestions.size == 0) 1 else answeredQuestions.last().level
 
     lateinit var currentQuestion: Question
-        private set
-
-    var skipLimit = 3
         private set
 
     var life = 5
@@ -34,33 +30,29 @@ class QuestionnaireSession(val questions: QuestionsService) {
     }
 
     private fun nextQuestion() {
-        val q = questions.getRandomQuestion(answeredQuestions, level)
+        val q = questions.getRandomQuestion(answeredQuestions)
         if (q == null)
-            throw FinishedGameException(this@QuestionnaireSession)
+            throw FinishedGameException(this)
         else
             currentQuestion = q
     }
 
     fun answer(selectedOption: QuestionOption): Boolean {
-        if (selectedOption.answer) {
+        return if (selectedOption.answer) {
             player.scores += scoresPerQuestion
             answeredQuestions.add(currentQuestion)
             nextQuestion()
 
-            if (answeredQuestions.size > 0 && answeredQuestions.size % questionToBonusSkip == 0)
+            if (answeredQuestions.size > 0 && (answeredQuestions.size % questionToBonusSkip) == 0)
                 skipLimit += 1
 
-            return true
+            true
         } else {
             player.scores -= scoresPerError
             life -= livesPerQuestion
 
-            return false
+            false
         }
-    }
-
-    fun askForHint() {
-        player.scores -= scoresPerHint
     }
 
     fun skipQuestion() {

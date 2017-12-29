@@ -2,37 +2,28 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_content"
+    android:id="@+id/mainContentGroup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:theme="@style/AppTheme"
-    tools:context="br.edu.ifce.crazyquiz.QuestionActivity">
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="@dimen/fab_margin"
-        android:theme="@style/AppTheme.HomeButton"
-        app:srcCompat="@drawable/ic_help" />
+    tools:context=".screens.question.QuestionActivity">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:padding="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:orientation="horizontal"
             android:weightSum="10">
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -45,8 +36,8 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/question_number"
-                    android:layout_width="match_parent"
+                    android:id="@+id/questionNumber"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/test_number"
                     android:textColor="@color/colorPrimaryText"
@@ -55,9 +46,9 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/question_text"
+                android:id="@+id/questionText"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="9"
                 android:text="@string/loading_question"
                 android:textColor="@color/colorPrimaryText"
@@ -67,7 +58,7 @@
         </LinearLayout>
 
         <ListView
-            android:id="@+id/question_options"
+            android:id="@+id/questionOptions"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
@@ -91,30 +82,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/life_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/test_number"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="30sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/level"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/level_number"
+                    android:id="@+id/lifeNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/test_number"
@@ -137,7 +105,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/scores_number"
+                    android:id="@+id/scoresNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/test_number"

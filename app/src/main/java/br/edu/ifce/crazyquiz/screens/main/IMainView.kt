@@ -1,8 +1,6 @@
-package br.edu.ifce.crazyquiz.views
+package br.edu.ifce.crazyquiz.screens.main
 
-import br.edu.ifce.crazyquiz.presenters.BasePresenter
-
-interface IMainView : BasePresenter.IView {
+interface IMainView {
     fun startGameScreen()
     fun openHighScoresScreen()
     fun openShareScreen()
