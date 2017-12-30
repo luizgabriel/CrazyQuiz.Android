@@ -2,6 +2,7 @@ package br.edu.ifce.crazyquiz.screens.question
 
 import br.edu.ifce.crazyquiz.data.Player
 import br.edu.ifce.crazyquiz.data.QuestionOption
+import br.edu.ifce.crazyquiz.data.QuestionnaireSession
 
 interface IQuestionView {
 
@@ -12,8 +13,7 @@ interface IQuestionView {
     fun setLifeCount(life: Int)
     fun setScoresCount(scores: Int)
     fun finish()
-    fun callFinishedGameScreen(player: Player)
-    fun callGameOverScreen(player: Player)
+    fun callFinishedGameScreen(scores: Int, mode: QuestionnaireSession.FinishedGameMode)
     fun setWrongAudio(audioId: Int)
     fun setRightAudio(audioId: Int)
     fun notifyRightAnswer()

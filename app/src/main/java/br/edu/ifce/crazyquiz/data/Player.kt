@@ -1,14 +1,9 @@
 package br.edu.ifce.crazyquiz.data
 
-class Player(var name: String = "", scores: Int = 0) {
+import android.annotation.SuppressLint
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-    var scores: Int = scores
-        set(value) {
-            field = if (value > 0) value else 0
-        }
-
-    override fun hashCode(): Int {
-        return name.hashCode()
-    }
-
-}
+@SuppressLint("ParcelCreator")
+@Parcelize
+data class Player(var name: String = "", var scores: Int = 0) : Parcelable

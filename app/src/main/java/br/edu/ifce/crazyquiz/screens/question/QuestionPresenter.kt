@@ -2,7 +2,7 @@ package br.edu.ifce.crazyquiz.screens.question
 
 import br.edu.ifce.crazyquiz.R
 import br.edu.ifce.crazyquiz.data.QuestionnaireSession
-import br.edu.ifce.crazyquiz.screens.highscores.IPlayerStore
+import br.edu.ifce.crazyquiz.data.QuestionnaireSession.FinishedGameMode.*
 import br.edu.ifce.crazyquiz.services.QuestionsService
 import br.edu.ifce.crazyquiz.util.BasePresenter
 import kotlinx.coroutines.experimental.CommonPool
@@ -42,7 +42,7 @@ class QuestionPresenter(view: IQuestionView, questionsStore: IQuestionStore) : B
 
             val result = session.answer(session.currentQuestion.options[number])
             view.setLifeCount(session.life)
-            view.setScoresCount(session.player.scores)
+            view.setScoresCount(session.scores)
 
             if (result) {
                 view.notifyRightAnswer()
@@ -54,10 +54,12 @@ class QuestionPresenter(view: IQuestionView, questionsStore: IQuestionStore) : B
             }
 
         } catch (e: QuestionnaireSession.FinishedGameException) {
-            view.notifyRightAnswer()
-            view.callFinishedGameScreen(session.player)
-        } catch (e: QuestionnaireSession.GameOverException) {
-            view.callGameOverScreen(session.player)
+            when (e.mode) {
+                GameOver -> view.notifyWrongAnswer()
+                GameComplete -> view.notifyRightAnswer()
+            }
+
+            view.callFinishedGameScreen(session.scores, e.mode)
         }
     }
 
@@ -76,7 +78,7 @@ class QuestionPresenter(view: IQuestionView, questionsStore: IQuestionStore) : B
 
     private fun updateCounters() {
         view.setLifeCount(session.life)
-        view.setScoresCount(session.player.scores)
+        view.setScoresCount(session.scores)
     }
 
 }

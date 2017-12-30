@@ -11,7 +11,13 @@ import android.widget.ArrayAdapter
 import br.edu.ifce.crazyquiz.R
 import br.edu.ifce.crazyquiz.data.Player
 import br.edu.ifce.crazyquiz.data.QuestionOption
+import br.edu.ifce.crazyquiz.data.QuestionnaireSession
+import br.edu.ifce.crazyquiz.data.QuestionnaireSession.FinishedGameMode.GameComplete
+import br.edu.ifce.crazyquiz.data.QuestionnaireSession.FinishedGameMode.GameOver
+import br.edu.ifce.crazyquiz.screens.highscores.HighScoresActivity
+import br.edu.ifce.crazyquiz.screens.highscores.PlayerStore
 import kotlinx.android.synthetic.main.activity_question.*
+import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.sdk25.coroutines.onItemClick
 import org.jetbrains.anko.toast
 
@@ -42,18 +48,17 @@ class QuestionActivity : AppCompatActivity(), IQuestionView {
         presenter.onBackButtonPressed()
     }
 
-    override fun callFinishedGameScreen(player: Player) {
-        toast(getString(R.string.game_complete))
-        toast(getString(R.string.scores) + " " + player.scores)
-        finish()
-    }
+    override fun callFinishedGameScreen(scores: Int, mode: QuestionnaireSession.FinishedGameMode) {
+        when (mode) {
+            GameOver -> toast(getString(R.string.game_over))
+            GameComplete -> toast(getString(R.string.game_complete))
+        }
+        toast(getString(R.string.scores) + " " + scores)
 
-    override fun callGameOverScreen(player: Player) {
-        toast(getString(R.string.game_over))
-        toast(getString(R.string.scores) + " " + player.scores)
-        player.name = "TestPlayer"
-
-        finish()
+        startActivity(intentFor<HighScoresActivity>(
+                "mode" to mode,
+                "scores" to scores
+        ))
     }
 
     override fun setQuestionText(text: String) {

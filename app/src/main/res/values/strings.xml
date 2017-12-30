@@ -12,7 +12,8 @@
     <string name="game_over">Game Over!</string>
     <string name="less_one_life">-1 Vida</string>
     <string name="earn_scores">+%d Scores</string>
-    <string name="game_complete">Parabéns! Você completou o Crazy Quiz!</string>
+    <string name="game_complete">Você completou o Crazy Quiz!</string>
+    <string name="congratulations">Parabéns!</string>
     <string name="high_scores">High Scores</string>
     <string name="footer_message">Consegue responder todas?</string>
     <string name="level">Nível</string>
