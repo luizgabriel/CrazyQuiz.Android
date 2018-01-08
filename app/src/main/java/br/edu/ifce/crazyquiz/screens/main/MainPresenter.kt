@@ -9,12 +9,14 @@ import kotlinx.coroutines.experimental.launch
 
 class MainPresenter(view: IMainView, private val store: IQuestionStore) : BasePresenter<IMainView>(view) {
 
-    private val service = QuestionsService()
+    private val questions = QuestionsService()
 
     override fun onCreateView() {
-        view.startLoading()
+        if (store.isEmpty())
+            view.startLoading()
+
         launch(CommonPool) {
-            val result = service.getQuestions(store.getLastRefreshDate())
+            val result = questions.getQuestions(store.getLastRefreshDate())
             store.addAll(result)
 
             launch(UI) {

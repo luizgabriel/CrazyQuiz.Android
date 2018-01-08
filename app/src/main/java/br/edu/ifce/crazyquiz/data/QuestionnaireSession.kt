@@ -1,4 +1,5 @@
 package br.edu.ifce.crazyquiz.data
+
 import br.edu.ifce.crazyquiz.screens.question.IQuestionStore
 
 class QuestionnaireSession(private val questions: IQuestionStore) {

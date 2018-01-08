@@ -2,7 +2,8 @@ package br.edu.ifce.crazyquiz.screens.question
 
 import br.edu.ifce.crazyquiz.R
 import br.edu.ifce.crazyquiz.data.QuestionnaireSession
-import br.edu.ifce.crazyquiz.data.QuestionnaireSession.FinishedGameMode.*
+import br.edu.ifce.crazyquiz.data.QuestionnaireSession.FinishedGameMode.GameComplete
+import br.edu.ifce.crazyquiz.data.QuestionnaireSession.FinishedGameMode.GameOver
 import br.edu.ifce.crazyquiz.services.QuestionsService
 import br.edu.ifce.crazyquiz.util.BasePresenter
 import kotlinx.coroutines.experimental.CommonPool

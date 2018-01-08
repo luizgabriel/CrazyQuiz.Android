@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="br.edu.ifce.crazyquiz.screens.main.MainActivity"
+            android:name=".screens.main.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
@@ -24,15 +24,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="br.edu.ifce.crazyquiz.screens.question.QuestionActivity"
-            android:noHistory="true"
+            android:name=".screens.question.QuestionActivity"
             android:label="@string/app_name"
+            android:noHistory="true"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="br.edu.ifce.crazyquiz.screens.highscores.HighScoresActivity"
-            android:noHistory="true"
+            android:name=".screens.highscores.HighScoresActivity"
             android:label="@string/high_scores"
+            android:noHistory="true"
             android:theme="@style/AppTheme" />
+        <activity android:name=".screens.finished.GameFinishedActivity"></activity>
     </application>
 
 </manifest>

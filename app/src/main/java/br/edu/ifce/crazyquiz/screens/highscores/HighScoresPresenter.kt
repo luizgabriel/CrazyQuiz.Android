@@ -1,8 +1,8 @@
 package br.edu.ifce.crazyquiz.screens.highscores
 
 import br.edu.ifce.crazyquiz.data.Player
+import br.edu.ifce.crazyquiz.data.QuestionnaireSession
 import br.edu.ifce.crazyquiz.util.BasePresenter
-import java.security.InvalidParameterException
 
 class HighScoresPresenter(view: IHighScoresView, private val store: IPlayerStore) : BasePresenter<IHighScoresView>(view) {
 
@@ -22,10 +22,13 @@ class HighScoresPresenter(view: IHighScoresView, private val store: IPlayerStore
     }
 
     fun onSaveScores(name: String, scores: Int) {
-        if (name.trim() == "")
-            throw InvalidParameterException("name")
-
+        if (name.trim() == "") return
         add(Player(name, scores))
+    }
+
+    fun onGameFinished(scores: Int, mode: QuestionnaireSession.FinishedGameMode?) {
+        if (scores > 0)
+            view.showGameFinishedDialog(Player(store.getLastPlayerName(), scores), mode!!)
     }
 
 }

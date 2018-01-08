@@ -9,13 +9,11 @@ import android.os.Vibrator
 import android.support.v7.app.AppCompatActivity
 import android.widget.ArrayAdapter
 import br.edu.ifce.crazyquiz.R
-import br.edu.ifce.crazyquiz.data.Player
 import br.edu.ifce.crazyquiz.data.QuestionOption
 import br.edu.ifce.crazyquiz.data.QuestionnaireSession
 import br.edu.ifce.crazyquiz.data.QuestionnaireSession.FinishedGameMode.GameComplete
 import br.edu.ifce.crazyquiz.data.QuestionnaireSession.FinishedGameMode.GameOver
 import br.edu.ifce.crazyquiz.screens.highscores.HighScoresActivity
-import br.edu.ifce.crazyquiz.screens.highscores.PlayerStore
 import kotlinx.android.synthetic.main.activity_question.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.sdk25.coroutines.onItemClick
@@ -23,7 +21,7 @@ import org.jetbrains.anko.toast
 
 class QuestionActivity : AppCompatActivity(), IQuestionView {
 
-    private val presenter = QuestionPresenter(this, QuestionStore(applicationContext))
+    private lateinit var presenter: QuestionPresenter
     private var wrongPlayer: MediaPlayer? = null
     private var rightPlayer: MediaPlayer? = null
 
@@ -33,6 +31,7 @@ class QuestionActivity : AppCompatActivity(), IQuestionView {
 
         questionOptions.onItemClick { _, _, i, _ -> presenter.onClickOption(i) }
 
+        presenter = QuestionPresenter(this, QuestionStore(applicationContext))
         presenter.onCreateView()
     }
 
@@ -53,7 +52,6 @@ class QuestionActivity : AppCompatActivity(), IQuestionView {
             GameOver -> toast(getString(R.string.game_over))
             GameComplete -> toast(getString(R.string.game_complete))
         }
-        toast(getString(R.string.scores) + " " + scores)
 
         startActivity(intentFor<HighScoresActivity>(
                 "mode" to mode,

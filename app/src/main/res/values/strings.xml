@@ -1,25 +1,25 @@
 <resources>
     <string name="app_name">Crazy Quiz 2</string>
-    <string name="welcome_text">Bem-vindo ao CrazyQuiz!</string>
+    <string name="welcome_text">Bem-vindo ao Crazy Quiz!</string>
     <string name="start">Começar</string>
-    <string name="save_score">Salvar Highscore</string>
+    <string name="save_score">Salvar pontuação</string>
     <string name="say_name">Informe o seu Nome</string>
     <string name="required_name">Precisamos saber o seu nome</string>
     <string name="question_number">Questão Nº</string>
     <string name="lives">Vidas</string>
-    <string name="scores">Scores</string>
+    <string name="scores">Pontuação</string>
     <string name="no_hint">Sem dica</string>
-    <string name="game_over">Game Over!</string>
+    <string name="game_over">Fim de Jogo!</string>
     <string name="less_one_life">-1 Vida</string>
     <string name="earn_scores">+%d Scores</string>
+    <string name="final_scores">%d Scores</string>
     <string name="game_complete">Você completou o Crazy Quiz!</string>
     <string name="congratulations">Parabéns!</string>
-    <string name="high_scores">High Scores</string>
+    <string name="high_scores">Pontuações</string>
     <string name="footer_message">Consegue responder todas?</string>
     <string name="level">Nível</string>
     <string name="test_number">0</string>
     <string name="loading_question">Carregando&#8230;</string>
     <string name="first_loading">Carregando questões&#8230;</string>
     <string name="service_unavailable">Servidor indisponível - verifique sua conexão com a internet</string>
-
 </resources>

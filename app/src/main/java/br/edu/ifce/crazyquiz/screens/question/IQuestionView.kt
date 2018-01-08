@@ -1,6 +1,5 @@
 package br.edu.ifce.crazyquiz.screens.question
 
-import br.edu.ifce.crazyquiz.data.Player
 import br.edu.ifce.crazyquiz.data.QuestionOption
 import br.edu.ifce.crazyquiz.data.QuestionnaireSession
 

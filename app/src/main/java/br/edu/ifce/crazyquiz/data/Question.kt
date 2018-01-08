@@ -10,5 +10,8 @@ data class Question(
         val id: Int,
         val text: String,
         val difficulty: Int,
-        val options: ArrayList<QuestionOption>) : Parcelable
+        val options: List<QuestionOption>) : Parcelable {
+
+    constructor() : this(0, "", 0, ArrayList())
+}
 

@@ -15,19 +15,22 @@ import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity(), IMainView {
 
-    private val presenter = MainPresenter(this, QuestionStore(applicationContext))
+    private lateinit var presenter: MainPresenter
     private lateinit var processDialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        processDialog = indeterminateProgressDialog(R.string.first_loading)
+        processDialog = indeterminateProgressDialog(R.string.first_loading) {
+            setCancelable(false)
+        }
 
         startBtn.onClick { presenter.onClickStartGame() }
         scoresBtn.onClick { presenter.onClickHighScores() }
         shareBtn.onClick { presenter.onClickShare() }
 
+        presenter = MainPresenter(this, QuestionStore(applicationContext))
         presenter.onCreateView()
     }
 
@@ -45,17 +48,17 @@ class MainActivity : AppCompatActivity(), IMainView {
 
     override fun errorOnLoadQuestions() {
         toast(R.string.service_unavailable)
-        processDialog.dismiss()
+        if (processDialog.isShowing) processDialog.hide()
         finish()
     }
 
     override fun startLoading() {
         startBtn.isEnabled = false
-        processDialog.show()
+        if (!processDialog.isShowing) processDialog.show()
     }
 
     override fun finishLoading() {
         startBtn.isEnabled = true
-        processDialog.hide()
+        if (processDialog.isShowing) processDialog.hide()
     }
 }
