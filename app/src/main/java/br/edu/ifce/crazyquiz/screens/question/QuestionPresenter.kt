@@ -47,11 +47,16 @@ class QuestionPresenter(view: IQuestionView, questionsStore: IQuestionStore) : B
 
             if (result) {
                 view.notifyRightAnswer()
-                launch(CommonPool) { service.notifyRightAnswer(session.currentQuestion) }
                 bindQuestion()
             } else {
                 view.notifyWrongAnswer()
-                launch(CommonPool) { service.notifyWrongAnswer(session.currentQuestion) }
+            }
+
+            launch(CommonPool) {
+                if (result)
+                    service.notifyRightAnswer(session.currentQuestion)
+                else
+                    service.notifyWrongAnswer(session.currentQuestion)
             }
 
         } catch (e: QuestionnaireSession.FinishedGameException) {
