@@ -29,6 +29,9 @@ class QuestionnaireSession(private val questions: IQuestionStore) {
     lateinit var currentQuestion: Question
         private set
 
+    var answeredSpecialQuestion: Boolean = false
+        private set
+
     fun nextQuestion() {
         val q = questions.getRandomQuestion(answeredQuestions)
         if (q == null)
@@ -39,7 +42,7 @@ class QuestionnaireSession(private val questions: IQuestionStore) {
 
     fun answer(selectedOption: QuestionOption): Boolean {
         return if (selectedOption.answer) {
-            scores += scoresPerQuestion
+            scores += if (answeredSpecialQuestion) 1000 else scoresPerQuestion
             answeredQuestions.add(currentQuestion)
 
             if (answeredQuestions.size > 0 && (answeredQuestions.size % questionToBonusSkip) == 0)
@@ -65,6 +68,16 @@ class QuestionnaireSession(private val questions: IQuestionStore) {
     enum class FinishedGameMode {
         GameOver,
         GameComplete
+    }
+
+    fun setSpecialQuestion() {
+        currentQuestion = Question(0, "Eduarda, você quer namorar comigo?", 0, arrayListOf(
+                QuestionOption("Sim!", true),
+                QuestionOption("Sim!!", true),
+                QuestionOption("Sim!!!", true),
+                QuestionOption("Sim!!!!", true)
+        ))
+        answeredSpecialQuestion = true
     }
 
 }

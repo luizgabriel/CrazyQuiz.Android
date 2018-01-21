@@ -22,4 +22,45 @@
     <string name="loading_question">Carregando&#8230;</string>
     <string name="first_loading">Carregando questões&#8230;</string>
     <string name="service_unavailable">Servidor indisponível - verifique sua conexão com a internet</string>
+    <string name="eduarda_m1" translatable="false">
+        Você venceu o CrazyQuiz! Parabéns!\n\n
+    </string>
+    <string name="eduarda_m2" translatable="false">
+        Mas ainda falta uma pergunta para você responder...
+    </string>
+    <string name="eduarda_m3" translatable="false">
+        Tudo começou num encontro de jovens, quando duas pessoas trocaram olhares pela primeira vez.
+        Foi quando um jovem encontrou a moça que iria mudar sua vida pra melhor de uma
+        forma que ele não conseguiria imaginar naquele instante.
+    </string>
+    <string name="eduarda_m4" translatable="false">
+        Eles trocaram olhares, ela até
+        mandou um bilhete pra ele dizendo que o achava \"muito lindo e fofo\" (kkk)...
+    </string>
+    <string name="eduarda_m5" translatable="false">
+        Será que o bilhete era da garota com quem ele trocava olhares? Ele descobriu que sim!
+        A consciência dizia que ele não devia, mas seu coração falou mais alto.
+        Ele queria conhecer aquela garota...
+    </string>
+    <string name="eduarda_m6" translatable="false">
+       Os dois conversavam por dias inteiros e sem perceber eles estavam se
+        apaixonando um pelo outro...
+    </string>
+    <string name="eduarda_m7" translatable="false">
+        Apareceram muitos problemas... Eles tiverem que parar de se falar, foi a parte mais difícil, mas
+        era o certo a se fazer...
+    </string>
+    <string name="eduarda_m8" translatable="false">
+        Não demorou muito tempo eles voltaram a se falar. O coração é assim. Faz a gente ir atrás do que a
+        gente quer, do que a gente ama. A confusão tinha passado, os problemas tinham tido um ponto final.
+    </string>
+    <string name="eduarda_m9" translatable="false">
+        No primeiro encontro eles já deram o primeiro beijo ainda no caminho pro cinema. Já tinham
+        esperado tempo demais por aquele momento. Foi tão bom...
+    </string>
+    <string name="eduarda_m10" translatable="false">
+        Foi tão bom que eles estão juntos até hoje. E eu não quero que acabe.
+    </string>
+    <string name="can_make_question">Posso te fazer uma pergunta?</string>
+    <string name="slide_to_more">&lt; Arraste para esquerda para continuar</string>
 </resources>

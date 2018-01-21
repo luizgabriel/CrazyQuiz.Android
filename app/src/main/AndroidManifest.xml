@@ -19,21 +19,20 @@
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".screens.question.QuestionActivity"
             android:label="@string/app_name"
-            android:noHistory="true"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".screens.highscores.HighScoresActivity"
             android:label="@string/high_scores"
-            android:noHistory="true"
             android:theme="@style/AppTheme" />
-        <activity android:name=".screens.finished.GameFinishedActivity"></activity>
+        <activity
+            android:name=".screens.special.EduardaActivity"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

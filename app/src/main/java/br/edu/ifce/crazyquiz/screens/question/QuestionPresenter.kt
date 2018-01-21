@@ -26,27 +26,23 @@ class QuestionPresenter(view: IQuestionView, questionsStore: IQuestionStore) : B
 
     private val rightAudios = arrayListOf(
             R.raw.right_cheering,
-            R.raw.right_ding,
-            R.raw.right_heavenly
+            R.raw.right_ding
     )
 
     override fun onCreateView() {
+        session.nextQuestion()
         bindQuestion()
-    }
-
-    fun onBackButtonPressed() {
-        view.finish()
     }
 
     fun onClickOption(number: Int) {
         try {
-
             val result = session.answer(session.currentQuestion.options[number])
             view.setLifeCount(session.life)
             view.setScoresCount(session.scores)
 
             if (result) {
                 view.notifyRightAnswer()
+                session.nextQuestion()
                 bindQuestion()
             } else {
                 view.notifyWrongAnswer()
@@ -61,17 +57,21 @@ class QuestionPresenter(view: IQuestionView, questionsStore: IQuestionStore) : B
 
         } catch (e: QuestionnaireSession.FinishedGameException) {
             when (e.mode) {
-                GameOver -> view.notifyWrongAnswer()
-                GameComplete -> view.notifyRightAnswer()
+                GameOver -> {
+                    view.notifyWrongAnswer()
+                    view.callFinishedGameScreen(session.scores, e.mode)
+                }
+                GameComplete -> {
+                    if (session.answeredSpecialQuestion)
+                        view.callFinishedGameScreen(session.scores, e.mode)
+                    else
+                        view.showSpecialSlide()
+                }
             }
-
-            view.callFinishedGameScreen(session.scores, e.mode)
         }
     }
 
     private fun bindQuestion() {
-        session.nextQuestion()
-
         val random = Random(System.currentTimeMillis())
         view.setRightAudio(rightAudios[Math.abs(random.nextInt()) % rightAudios.size])
         view.setWrongAudio(wrongAudios[Math.abs(random.nextInt()) % wrongAudios.size])
@@ -85,6 +85,11 @@ class QuestionPresenter(view: IQuestionView, questionsStore: IQuestionStore) : B
     private fun updateCounters() {
         view.setLifeCount(session.life)
         view.setScoresCount(session.scores)
+    }
+
+    fun onSpecialResult() {
+        session.setSpecialQuestion()
+        bindQuestion()
     }
 
 }

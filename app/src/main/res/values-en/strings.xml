@@ -23,4 +23,6 @@
     <string name="lives">Lives</string>
     <string name="game_complete">You\'ve completed the Crazy Quiz!</string>
     <string name="scores">Scores</string>
+    <string name="can_make_question">Can I make you a question?</string>
+    <string name="slide_to_more">Slide left to continue</string>
 </resources>

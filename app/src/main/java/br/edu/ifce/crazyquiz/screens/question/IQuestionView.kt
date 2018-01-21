@@ -11,10 +11,10 @@ interface IQuestionView {
     fun notifyWrongAnswer()
     fun setLifeCount(life: Int)
     fun setScoresCount(scores: Int)
-    fun finish()
     fun callFinishedGameScreen(scores: Int, mode: QuestionnaireSession.FinishedGameMode)
     fun setWrongAudio(audioId: Int)
     fun setRightAudio(audioId: Int)
     fun notifyRightAnswer()
+    fun showSpecialSlide()
 
 }

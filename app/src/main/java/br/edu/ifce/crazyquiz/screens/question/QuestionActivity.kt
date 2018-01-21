@@ -1,6 +1,7 @@
 package br.edu.ifce.crazyquiz.screens.question
 
 import android.content.Context
+import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
@@ -14,7 +15,11 @@ import br.edu.ifce.crazyquiz.data.QuestionnaireSession
 import br.edu.ifce.crazyquiz.data.QuestionnaireSession.FinishedGameMode.GameComplete
 import br.edu.ifce.crazyquiz.data.QuestionnaireSession.FinishedGameMode.GameOver
 import br.edu.ifce.crazyquiz.screens.highscores.HighScoresActivity
+import br.edu.ifce.crazyquiz.screens.special.EduardaActivity
 import kotlinx.android.synthetic.main.activity_question.*
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.delay
+import kotlinx.coroutines.experimental.launch
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.sdk25.coroutines.onItemClick
 import org.jetbrains.anko.toast
@@ -24,10 +29,13 @@ class QuestionActivity : AppCompatActivity(), IQuestionView {
     private lateinit var presenter: QuestionPresenter
     private var wrongPlayer: MediaPlayer? = null
     private var rightPlayer: MediaPlayer? = null
+    private lateinit var backgroundPlayer: MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
+
+        backgroundPlayer = MediaPlayer.create(this, R.raw.ed_sheeran_perfect)
 
         questionOptions.onItemClick { _, _, i, _ -> presenter.onClickOption(i) }
 
@@ -43,8 +51,21 @@ class QuestionActivity : AppCompatActivity(), IQuestionView {
         rightPlayer = MediaPlayer.create(this, audioId)
     }
 
+    override fun showSpecialSlide() {
+        backgroundPlayer.start()
+        rightPlayer?.stop()
+        startActivityForResult(intentFor<EduardaActivity>(), 0)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        presenter.onSpecialResult()
+    }
+
     override fun onBackPressed() {
-        presenter.onBackButtonPressed()
+        super.onBackPressed()
+        backgroundPlayer.pause()
+        wrongPlayer?.stop()
+        rightPlayer?.stop()
     }
 
     override fun callFinishedGameScreen(scores: Int, mode: QuestionnaireSession.FinishedGameMode) {
@@ -61,6 +82,10 @@ class QuestionActivity : AppCompatActivity(), IQuestionView {
 
     override fun setQuestionText(text: String) {
         questionText.text = text
+        if (text.length > 60)
+            questionText.textSize = 20f
+        else if (text.length > 70)
+            questionText.textSize = 18f
     }
 
     override fun setQuestionNumber(number: Int) {
