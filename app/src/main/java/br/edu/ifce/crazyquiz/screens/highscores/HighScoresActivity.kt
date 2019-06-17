@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import br.edu.ifce.crazyquiz.R
 import br.edu.ifce.crazyquiz.data.Player
 import br.edu.ifce.crazyquiz.data.QuestionnaireSession.FinishedGameMode
@@ -16,6 +17,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.activity_high_scores.*
 import kotlinx.android.synthetic.main.high_scores_list_item.*
 import org.jetbrains.anko.*
+import org.jetbrains.anko.appcompat.v7.Appcompat
 
 class HighScoresActivity : AppCompatActivity(), IHighScoresView {
 
@@ -37,12 +39,17 @@ class HighScoresActivity : AppCompatActivity(), IHighScoresView {
     }
 
     override fun showGameFinishedDialog(player: Player, mode: FinishedGameMode) {
-        alert {
+        alert(Appcompat) {
             titleResource = R.string.save_score
             isCancelable = false
 
+            also {
+                ctx.setTheme(R.style.AppCompatAlertDialogStyle)
+            }
+
             customView {
-                verticalLayout(R.style.Base_V11_Theme_AppCompat_Light_Dialog) {
+                linearLayout {
+                    orientation = LinearLayout.VERTICAL
                     padding = dip(30)
 
                     textView {
@@ -90,15 +97,16 @@ class HighScoresActivity : AppCompatActivity(), IHighScoresView {
 
         override fun getItemCount() = players.count()
 
-        override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val player = players[position]
-            holder?.bind(player)
+            holder.bind(player)
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-            val view = LayoutInflater.from(parent!!.context).inflate(R.layout.high_scores_list_item, parent, false)
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.high_scores_list_item, parent, false)
             return ViewHolder(view)
         }
+
     }
 
 }

@@ -16,7 +16,7 @@ import br.edu.ifce.crazyquiz.data.QuestionnaireSession.FinishedGameMode.GameOver
 import br.edu.ifce.crazyquiz.screens.highscores.HighScoresActivity
 import kotlinx.android.synthetic.main.activity_question.*
 import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.sdk25.coroutines.onItemClick
+import org.jetbrains.anko.sdk25.listeners.onItemClick
 import org.jetbrains.anko.toast
 
 class QuestionActivity : AppCompatActivity(), IQuestionView {

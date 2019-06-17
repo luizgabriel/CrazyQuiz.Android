@@ -6,8 +6,9 @@ import br.edu.ifce.crazyquiz.data.QuestionnaireSession.FinishedGameMode.GameComp
 import br.edu.ifce.crazyquiz.data.QuestionnaireSession.FinishedGameMode.GameOver
 import br.edu.ifce.crazyquiz.services.QuestionsService
 import br.edu.ifce.crazyquiz.util.BasePresenter
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 
 class QuestionPresenter(view: IQuestionView, questionsStore: IQuestionStore) : BasePresenter<IQuestionView>(view) {
@@ -47,11 +48,11 @@ class QuestionPresenter(view: IQuestionView, questionsStore: IQuestionStore) : B
 
             if (result) {
                 view.notifyRightAnswer()
-                launch(CommonPool) { service.notifyRightAnswer(session.currentQuestion) }
+                GlobalScope.launch(Dispatchers.IO) { service.notifyRightAnswer(session.currentQuestion) }
                 bindQuestion()
             } else {
                 view.notifyWrongAnswer()
-                launch(CommonPool) { service.notifyWrongAnswer(session.currentQuestion) }
+                GlobalScope.launch(Dispatchers.IO) { service.notifyWrongAnswer(session.currentQuestion) }
             }
 
         } catch (e: QuestionnaireSession.FinishedGameException) {

@@ -6,6 +6,4 @@ import kotlinx.android.parcel.Parcelize
 
 @SuppressLint("ParcelCreator")
 @Parcelize
-data class QuestionOption(val text: String, val answer: Boolean) : Parcelable {
-    constructor() : this("", false)
-}
+data class QuestionOption(val text: String, val answer: Boolean) : Parcelable

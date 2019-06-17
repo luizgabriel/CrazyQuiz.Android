@@ -16,7 +16,7 @@ class QuestionsService {
 
     private val client = api(QuestionsApi::class.java)
 
-    suspend fun getQuestions(lastRefresh: Date?): ArrayList<Question> {
+    fun getQuestions(lastRefresh: Date?): ArrayList<Question> {
         return try {
             val response = client.getQuestions(formatDate(lastRefresh)).execute()
             if (response.isSuccessful)
@@ -29,7 +29,7 @@ class QuestionsService {
         }
     }
 
-    suspend fun notifyRightAnswer(question: Question) {
+    fun notifyRightAnswer(question: Question) {
         try {
             client.notifyRightAnswer(question.id).execute()
         } catch (e: IOException) {
@@ -37,7 +37,7 @@ class QuestionsService {
         }
     }
 
-    suspend fun notifyWrongAnswer(question: Question) {
+    fun notifyWrongAnswer(question: Question) {
         try {
             client.notifyWrongAnswer(question.id).execute()
         } catch (e: IOException) {

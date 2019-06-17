@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Crazy Quiz 2</string>
+    <string name="app_name">Crazy Quiz</string>
     <string name="final_scores">%d Scores</string>
     <string name="earn_scores">+%d Scores</string>
     <string name="test_number">0</string>

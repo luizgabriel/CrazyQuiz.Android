@@ -9,7 +9,7 @@ import br.edu.ifce.crazyquiz.screens.question.QuestionActivity
 import br.edu.ifce.crazyquiz.screens.question.QuestionStore
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.indeterminateProgressDialog
-import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.sdk25.listeners.onClick
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 

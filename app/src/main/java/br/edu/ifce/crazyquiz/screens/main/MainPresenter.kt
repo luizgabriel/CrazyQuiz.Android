@@ -3,9 +3,10 @@ package br.edu.ifce.crazyquiz.screens.main
 import br.edu.ifce.crazyquiz.screens.question.IQuestionStore
 import br.edu.ifce.crazyquiz.services.QuestionsService
 import br.edu.ifce.crazyquiz.util.BasePresenter
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainPresenter(view: IMainView, private val store: IQuestionStore) : BasePresenter<IMainView>(view) {
 
@@ -15,11 +16,11 @@ class MainPresenter(view: IMainView, private val store: IQuestionStore) : BasePr
         if (store.isEmpty())
             view.startLoading()
 
-        launch(CommonPool) {
+        GlobalScope.launch(IO) {
             val result = questions.getQuestions(store.getLastRefreshDate())
             store.addAll(result)
 
-            launch(UI) {
+            GlobalScope.launch(Main) {
                 view.finishLoading()
                 if (store.isEmpty())
                     view.errorOnLoadQuestions()

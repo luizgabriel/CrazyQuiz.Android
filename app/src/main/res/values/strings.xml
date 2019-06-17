@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Crazy Quiz 2</string>
+    <string name="app_name">Crazy Quiz</string>
     <string name="welcome_text">Bem-vindo ao Crazy Quiz!</string>
     <string name="start">Começar</string>
     <string name="save_score">Salvar pontuação</string>

@@ -7,7 +7,6 @@
         <item name="android:textColorPrimary">@color/colorPrimaryText</item>
         <item name="android:textColorSecondary">@color/colorSecondaryText</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
-        <item name="android:alertDialogTheme">@style/Base.V11.Theme.AppCompat.Light.Dialog</item>
     </style>
 
     <style name="AppTheme.HomeButton" parent="Widget.Design.FloatingActionButton">
@@ -15,8 +14,14 @@
         <item name="android:tint">@color/colorPrimaryText</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/colorPrimaryDark</item>
+        <item name="android:background">#FFFFFF</item>
+    </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.AppBarOverlay" parent="Theme.AppCompat.NoActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="Theme.AppCompat.Light" />
 
 </resources>

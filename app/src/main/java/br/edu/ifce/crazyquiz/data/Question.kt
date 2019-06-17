@@ -9,9 +9,6 @@ import kotlinx.android.parcel.Parcelize
 data class Question(
         val id: Int,
         val text: String,
-        val difficulty: Int,
-        val options: List<QuestionOption>) : Parcelable {
-
-    constructor() : this(0, "", 0, ArrayList())
-}
+        val difficulty: Float,
+        val options: List<QuestionOption>) : Parcelable
 
